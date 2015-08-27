@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>org.webjars</groupId>
+	<artifactId>eits-ng</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<jetty.version>9.2.9.v20150224</jetty.version>
+		<wro4j.version>1.7.7</wro4j.version>
+		
+		<!-- Webjars -->
+		<angularjs.version>1.4.1</angularjs.version>
+		<angular-material.version>0.10.0</angular-material.version>
+		<jquery.version>2.1.4</jquery.version>
+		<momentjs.version>2.10.2</momentjs.version>
+	</properties>
+
+	<developers>
+		<developer>
+			<id>rodrigo@eits.com.br</id>
+			<name>Rodrigo P. Fraga</name>
+			<email>rodrigo@eits.com.br</email>
+		</developer>
+	</developers>
+	
+	<!-- Repositories -->
+	<repositories>
+		<repository>
+			<id>eits-repository</id>
+          	<url>http://maven.eits.com.br/content/repositories/releases</url>
+		</repository>
+	</repositories>
+	
+	<distributionManagement>
+		<repository>
+			<id>eits-repository-release</id>
+          	<url>http://maven.eits.com.br/content/repositories/releases</url>
+		</repository>
+  		<snapshotRepository>
+    		<id>eits-repository-snapshot</id>
+     		<url>http://maven.eits.com.br/content/repositories/snapshots/</url>
+  		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencies>
+    	<!-- WebJars -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>jquery</artifactId>
+		    <version>${jquery.version}</version>
+		</dependency>
+  		<dependency>
+    		<groupId>org.webjars</groupId>
+    		<artifactId>angularjs</artifactId>
+    		<version>${angularjs.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.js</include>
+					<include>**/*.html</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/*.js</exclude>
+					<exclude>**/*.html</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+            <plugin>
+                <groupId>ro.isdc.wro4j</groupId>
+                <artifactId>wro4j-maven-plugin</artifactId>
+                <version>${wro4j.version}</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                	<contextFolder>${basedir}/src/main/resources</contextFolder>
+			      	<targetGroups>eits-ng</targetGroups>
+			      	<minimize>true</minimize>
+			      	<ignoreMissingResources>false</ignoreMissingResources>
+			      	<wroFile>${basedir}/src/main/resources/META-INF/resources/webjars/eits-ng/wro.xml</wroFile>
+			      	<destinationFolder>${project.build.directory}/classes/META-INF/resources/webjars/eits-ng/${version}</destinationFolder>
+                </configuration>
+            </plugin>
+        
+			<plugin>
+  				<groupId>org.eclipse.jetty</groupId>
+  				<artifactId>jetty-maven-plugin</artifactId>
+  				<version>${jetty.version}</version>
+  				<configuration>
+  					<webAppSourceDirectory>${project.build.directory}/classes/META-INF/resources</webAppSourceDirectory>
+    				<webApp>
+    					<defaultsDescriptor>${basedir}/src/main/resources/org/eclipse/jetty/webapp/webdefault.xml</defaultsDescriptor>
+	    			</webApp>
+  				</configuration>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>ro.isdc.wro4j</groupId>
+										<artifactId>
+											wro4j-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.7.7,)
+										</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
