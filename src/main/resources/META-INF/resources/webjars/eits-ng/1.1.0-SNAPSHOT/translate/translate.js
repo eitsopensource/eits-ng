@@ -4,7 +4,7 @@
 (function(window, angular, undefined) {
 	'use strict';
 	
-	var translateModule = angular.module('eits-angularTranslate', []);
+	var translateModule = angular.module('eits.translate', []);
 	
 	/**
 	 * A filter to translate on a HTML. Usage:

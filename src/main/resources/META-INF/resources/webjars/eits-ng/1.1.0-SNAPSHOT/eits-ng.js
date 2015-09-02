@@ -7,8 +7,8 @@
 	 * @description List module
 	 */
 	angular.module('eits-ng', [ 
-	    'eits-dwrBroker',
-		'eits.angularTranslate',
+	    'eits.dwr-broker',
+		'eits.translate',
 	]);
 
 })();

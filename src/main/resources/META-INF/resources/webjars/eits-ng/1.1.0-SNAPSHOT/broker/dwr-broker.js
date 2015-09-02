@@ -4,7 +4,7 @@
 (function(window, angular, undefined) {
 	'use strict';
 	
-	var brokerModule = angular.module('eits-dwrBroker', []);
+	var brokerModule = angular.module('eits.dwr-broker', []);
 	
 	/**
 	 * 
