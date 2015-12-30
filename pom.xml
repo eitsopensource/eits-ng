@@ -16,9 +16,7 @@
 		
 		<!-- Webjars -->
 		<angularjs.version>1.4.1</angularjs.version>
-		<angular-material.version>0.10.0</angular-material.version>
 		<jquery.version>2.1.4</jquery.version>
-		<momentjs.version>2.10.2</momentjs.version>
 	</properties>
 
 	<developers>
