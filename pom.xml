@@ -49,12 +49,12 @@
 	<dependencies>
     	<!-- WebJars -->
 		<dependency>
-		    <groupId>org.webjars</groupId>
+		    <groupId>org.webjars.bower</groupId>
 		    <artifactId>jquery</artifactId>
 		    <version>${jquery.version}</version>
 		</dependency>
   		<dependency>
-    		<groupId>org.webjars</groupId>
+    		<groupId>org.webjars.bower</groupId>
     		<artifactId>angularjs</artifactId>
     		<version>${angularjs.version}</version>
 		</dependency>
