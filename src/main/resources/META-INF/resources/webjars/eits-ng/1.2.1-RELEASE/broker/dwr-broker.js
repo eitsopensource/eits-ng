@@ -36,6 +36,7 @@
 	    this.$get = function() {
 	    	var $self = this;
 	    	
+	    	//Quando carregado o script, é aplicado no objeto window (window[service]).
 	    	return function( service ) {
 	    		$self.options.url = $self.interfaceUrl + "/"+service+".js";
 		    	
@@ -46,9 +47,10 @@
 		    		}
 		    	);
 		    	
-		    	//Quando carregado o script, é aplicado no objeto window (window[service]).
 		    	//Atribui o path do broker
-		    	window[service]._path = $self.url;
+		    	setTimeout(function() {//setTimeout para evitar problemas de mobile
+		    		window[service]._path = $self.url;
+		    	});
 		    	
 		    	//Retorna a instancia para quem solicitou (via DI)
 		    	return window[service];

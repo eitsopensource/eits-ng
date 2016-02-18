@@ -1,3 +1,5 @@
+//eits-ng ${version}
+
 (function() {
 	'use strict';
 
