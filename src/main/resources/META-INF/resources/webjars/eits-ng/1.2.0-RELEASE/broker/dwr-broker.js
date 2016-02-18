@@ -14,7 +14,11 @@
 		/**
 		 * 
 		 */
-		this.url = "./broker/interface";
+		this.url = "./broker";
+		/**
+		 * 
+		 */
+		this.interfaceUrl = this.url+"/interface";
 		
 		/**
 		 * 
@@ -33,7 +37,7 @@
 	    	var $self = this;
 	    	
 	    	return function( service ) {
-	    		$self.options.url = $self.url + "/"+service+".js";
+	    		$self.options.url = $self.interfaceUrl + "/"+service+".js";
 		    	
 		    	//Carrega dinamicamente o script
 		    	$.ajax( $self.options )
@@ -42,8 +46,12 @@
 		    		}
 		    	);
 		    	
+		    	//Quando carregado o script, é aplicado no objeto window (window[service]).
+		    	//Atribui o path do broker
+		    	window[service]._path = $self.url;
+		    	
 		    	//Retorna a instancia para quem solicitou (via DI)
-		    	return window[service];//Quando carregado o script, é aplicado no objeto window.
+		    	return window[service];
 	    	};
 	    };
 	    
@@ -52,6 +60,10 @@
 	     */
 	    this.setBrokerURL = function(url) {
 	    	this.url = url;
+	    	this.interfaceUrl = this.url+"/interface";
+	    	
+	    	//http://directwebremoting.org/dwr/documentation/browser/xdomain.html
+	    	window.pathToDwrServlet = this.url;
 	    };
 	});
 	
