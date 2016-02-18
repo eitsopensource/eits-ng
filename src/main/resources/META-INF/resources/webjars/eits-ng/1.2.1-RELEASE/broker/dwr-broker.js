@@ -50,7 +50,7 @@
 		    	//Atribui o path do broker
 		    	setTimeout(function() {//setTimeout para evitar problemas de mobile
 		    		window[service]._path = $self.url;
-		    	});
+		    	}, 300);
 		    	
 		    	//Retorna a instancia para quem solicitou (via DI)
 		    	return window[service];
