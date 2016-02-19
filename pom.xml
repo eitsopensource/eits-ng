@@ -5,7 +5,7 @@
 	
 	<groupId>org.webjars</groupId>
 	<artifactId>eits-ng</artifactId>
-	<version>1.2.1-RELEASE</version>
+	<version>1.2.2-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<properties>
