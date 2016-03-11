@@ -29,45 +29,37 @@
 		    async: false,
 		    url: null
 		};
-		
-		/**
-		 * 
-		 */
-		this.configureServicePath = function( service ) {
-			var $self = this;
-			
-			//setTimeout para evitar problemas de load time no mobile
-			setTimeout(function() {
-				if ( window[service] ) {
-					window[service]._path = this.url;
-				//se nao carregou ainda, espera o proximo ciclo
-				} else { 
-					$self.configureServicePath(service);
-				}
-	    	});
-		};
 			
 		/**
 		 * 
 		 */
-	    this.$get = function() {
+	    this.$get = function( $q ) {
 	    	var $self = this;
 	    	
 	    	//Quando carregado o script, é aplicado no objeto window (window[service]).
 	    	return function( service ) {
 	    		$self.options.url = $self.interfaceUrl + "/"+service+".js";
+	    		
+	    		var deferred = $q.defer();
+	    		
+	    		deferred.notify('Loading service...: '+service);
 		    	
-		    	//Carrega dinamicamente o script
+			    //Carrega dinamicamente o script
 		    	$.ajax( $self.options )
+		    		.done( function( data, textStatus, jqXHR ) {
+		    			
+		    			if ( window[service] ) {
+							window[service]._path = $self.url;
+							deferred.resolve( data, jqXHR );
+		    			} else {
+		    				deferred.reject( "Error loading broker service: "+service, data);
+		    			}
+		    		})
 		    		.fail( function( jqXHR, textStatus, exception ) {
-		    			console.error("Error loading broker service: "+service, "Reason: "+exception );
-		    		}
-		    	);
+		    			deferred.reject( "Error loading broker service: "+service, exception);
+		    		});
 		    	
-		    	$self.configureServicePath( service );		    			
-		    	
-		    	//Retorna a instancia para quem solicitou (via DI)
-		    	return window[service];
+		    	return deferred.promise;
 	    	};
 	    };
 	    
